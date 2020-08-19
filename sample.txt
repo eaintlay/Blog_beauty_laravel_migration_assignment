@@ -1,0 +1,23 @@
+https://medium.com/laravel-myanmar/tutorials-laravel-blog-f066f2e59588
+
+
+ $table->id();
+            // $table->string ('title');
+            // $table->text ('body');
+            // $table->integer('category_id');
+            // $table->foreign('category_id')
+            //       ->references('id')->on('categories')
+            //       ->onDelete('cascade');
+            // $table->timestamps();
+
+
+            //comment
+
+
+             $table->id();
+            $table->text ('content');
+            $table->integer ('article_id');
+            $table->foreign('article_id')
+                  ->references('id')->on('articles')
+                  ->onDelete('cascade');
+            $table->timestamps();
