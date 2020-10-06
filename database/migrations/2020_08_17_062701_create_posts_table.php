@@ -17,15 +17,18 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('article_id');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('user_id');
+            $table->text('category_name');
+            $table->text('post_name');
+            $table->text('post_detail');
+            $table->text('photo');
+            $table->text('content');
+            
 
             $table->foreign('article_id')
                   ->references('id')->on('articles')
                   ->onDelete('cascade');
 
-            $table->foreign('user_id')
-                  ->references('id')->on('users')
-                  ->onDelete('cascade');
+            
             
             $table->foreign('category_id')
                   ->references('id')->on('categories')

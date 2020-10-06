@@ -11,6 +11,8 @@
 	<th>No</th>
 	
 	<th>Name</th>
+
+	<th>Action</th>
 	
 			
 	</tr>

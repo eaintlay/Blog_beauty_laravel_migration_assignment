@@ -13,4 +13,9 @@ class Category extends Model
     {
         return $this->belongsToMany('App\Post');
     }
+
+     public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
 }

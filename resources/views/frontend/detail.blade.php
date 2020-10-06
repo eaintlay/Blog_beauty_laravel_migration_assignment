@@ -1,65 +1,86 @@
 @extends('frontendtemplate')
-@section('title','Item Detail')
+@section('title', 'Detail')
 
 @section('content')
 
-<div class="container">
-	
-	<div class="container-fluid my-4">
-	<h2>Product Detail</h2>
+   <div class="container-fluid">
 
-	
-		<div class="row my-4">
-			<div class="col col-md-4">
-				<img src="{{asset($item->photo)}}" class="img-fluid">
-			</div>
-			<div class="col col-md-8">
-				<!-- <table class="table table-bordered">
-					<tbody>
-						<tr>
-							<td>Product Name:</td>
-							<td>"{{$item->name}}"</td>
-						</tr>
-						<tr>
-							<td>Product Code:</td>
-							<td>"{{$item->codeno}}"</td>
-						</tr>
-						<tr>
-							<td>Product Price:</td>
-							<td>"{{$item->price}}"</td>
-						</tr>
-						<tr>
-							<td>Description:</td>
-							<td>"{{$item->description}}"</td>
-						</tr>
-					</tbody>
-				</table> -->
-				
-        <p>Product Name:{{$item->name}}</p>
-        <p>Product Price:{{$item->price}}</p>
-        
-        
-				<div class="row">
-					<div class="col">
-						<a href="{{route('cart')}}" class="btn btn-success btn-sm add_to_cart" data-id="{{$item->id}}" data-photo="{{asset($item->photo)}}" data-name="{{$item->name}}" data-id="{{$item->id}}" data-price="{{$item->price}}" data-description="{{$item->description}}"><i class='fa fa-shopping-cart'></i>Add to Cart</a>
-					</div>
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Articles</h1>
+            <a href="{{route('articles.create')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white-50"></i>New</a>
+          </div>
 
-				</div>
-
-			</div>
-
-		</div>
-	
+          <!-- Content Row -->
+          <div class="row">
 
 
-</div>
+            <!-- Table -->
 
-@endsection
+            <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Article Category</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  
+                  <thead>
+    <tr> 
+      <th>No</th>
 
-@section('script')
+      <th>Category Name</th>
 
-<script type="text/javascript" src="{{asset('frontendtemplate/js/custom.js')}}">
-	
-</script>
+      <th>Title</th>
+
+      <th>Body</th>
+
+      <th>Action</th>
+
+
+      
+    </tr>
+
+  </thead>
+  <tbody>
+    @foreach($articles as $article)
+    <tr>
+
+
+
+      <td>{{$article->id}}</td>
+      <td>{{$article->category_name}}</td>
+      <td>{{$article->title}}</td>
+      <td>{{$article->body}}
+        <a href="" class="d-block">
+          <span class="badge badge-success">More</span>
+        </a></td>
+
+
+
+        <td>
+          <a href="{{route('articles.edit',$article->id)}}" class="btn btn-warning">Edit</a>
+          <form method="post" action="{{route('articles.destroy',$article->id)}}" class="d-inline-block" onsubmit="return confirm('Are You sure?')">
+            @csrf
+            @method('Delete')
+            <input type="submit" name="btn-submit" value="Delete" class="btn btn-danger">
+          </form>
+
+        </td>
+
+      </tr>
+      @endforeach
+    </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          </div>
+
+
+
+        </div>
+  
 
 @endsection
