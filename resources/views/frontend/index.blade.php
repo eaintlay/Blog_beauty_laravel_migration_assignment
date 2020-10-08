@@ -1,5 +1,5 @@
 @extends('frontendtemplate')
-@section('title','home');
+@section('title','home')
 
 @section('content')
   <!-- Intro section -->

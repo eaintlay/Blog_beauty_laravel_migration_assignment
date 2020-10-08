@@ -26,12 +26,11 @@ use Illuminate\Support\Facades\Route;
 //Route::resource('items','ItemController');
  Route::group(['middleware' => ['auth','role:blogger']], function () 
  {
-// Route::resource('articles','ArticleController');
- //Route::resource('categories','CategoryController');
- //Route::resource('comments','CommentController');
- //Route::resource('posts','PostController');
- 	Route::resource('frontend','FrontendController');
+
+ 	Route::resource('posts','FrontendPostController');
+
  	Route::get('blogpage', 'FrontendController@blog')->name('blog');
+
  	Route::get('readmorepage', 'FrontendController@readmore')->name('readmore');
  	Route::get('parts', 'FrontendController@parts')->name('parts');
  	Route::get('continuereading', 'FrontendController@continue')->name('continue');
@@ -44,24 +43,32 @@ use Illuminate\Support\Facades\Route;
  	//Route::get('commentshow/{id}', 'FrontendController@commentshow')->name('commentshow');
  	Route::get('commentupdate', 'FrontendController@commentupdate')->name('commentupdate');
  	Route::get('commentdestroy', 'FrontendController@commentdestroy')->name('commentdestroy');
- 	Route::get('postcreate','FrontendController@postcreate')->name('postcreate');
+ // 	Route::get('postcreate','FrontendController@postcreate')->name('postcreate');
 
- 	Route::post('poststore', 'FrontendController@poststore')->name('poststore');
- 	Route::get('postpage', 'FrontendController@postpage')->name('postpage');
+//	Route::post('poststore', 'FrontendController@poststore')->name('poststore');
+ // 	Route::get('postpage', 'FrontendController@postpage')->name('postpage');
 
- Route::get('postcreate','FrontendController@postcreate')->name('postcreate');
- Route::get('postedit', 'FrontendController@postedit')->name('postedit');
+ // Route::get('postcreate','FrontendController@postcreate')->name('postcreate');
+ // Route::get('postedit', 'FrontendController@postedit')->name('postedit');
  
  
- Route::get('postupdate', 'FrontendController@postupdate')->name('postupdate');
+ // Route::get('postupdate', 'FrontendController@postupdate')->name('postupdate');
 
- Route::get('postshow', 'FrontendController@postshow')->name('postshow');
+ // Route::get('postshow', 'FrontendController@postshow')->name('postshow');
 
- Route::get('postdestroy', 'FrontendController@postdestroy')->name('postdestroy');
+ // Route::get('postdestroy', 'FrontendController@postdestroy')->name('postdestroy');
+
+ Route::get('post', 'FrontendController@createpost')->name('createpost');
 
  
 
  });
+
+
+
+ Route::get('post', 'PostController@createpost')->name('createpost');
+
+ Route::get('postcreating', 'FrontendController@post')->name('post');
 
  Route::resource('articles','ArticleController');
 
@@ -71,30 +78,23 @@ use Illuminate\Support\Facades\Route;
 
  Route::get('indexpage', 'FrontendController@index')->name('index');
 
- Route::get('categorypage', 'FrontendController@categorypage')->name('categorypage');
+ 
  Route::get('categorypage', 'FrontendController@categorypage')->name('categorypage');
 
  	Route::get('commentpage', 'FrontendController@commentpage')->name('commentpage');
 
- 	Route::get('commentcreate', 'FrontendController@commentcreate')->name('commentcreate');
- 	Route::get('commentedit', 'FrontendController@commentedit')->name('commentedit');
- 	Route::get('commentshow/{id}', 'FrontendController@commentshow')->name('commentshow');
- 	Route::get('commentupdate', 'FrontendController@commentupdate')->name('commentupdate');
- 	Route::get('commentdestroy', 'FrontendController@commentdestroy')->name('commentdestroy');
+ 	// Route::get('commentcreate', 'FrontendController@commentcreate')->name('commentcreate');
+ 	// Route::get('commentedit', 'FrontendController@commentedit')->name('commentedit');
+ 	// Route::get('commentshow/{id}', 'FrontendController@commentshow')->name('commentshow');
+ 	// Route::get('commentupdate', 'FrontendController@commentupdate')->name('commentupdate');
+ 	// Route::get('commentdestroy', 'FrontendController@commentdestroy')->name('commentdestroy');
 
  Route::get('postpage', 'FrontendController@postpage')->name('postpage');
 
- Route::get('postcreate','FrontendController@postcreate')->name('postcreate');
+  Route::get('postcreate','FrontendController@postcreate')->name('postcreate');
 
- Route::get('poststore', 'FrontendController@poststore')->name('poststore');
- Route::get('postedit', 'FrontendController@postedit')->name('postedit');
+  Route::post('poststore', 'FrontendController@poststore')->name('poststore');
  
- 
- Route::get('postupdate', 'FrontendController@postupdate')->name('postupdate');
-
- Route::get('postshow', 'FrontendController@postshow')->name('postshow');
-
- Route::get('postdestroy', 'FrontendController@postdestroy')->name('postdestroy');
 
  Route::get('articledestroy', 'FrontendController@articledestroy')->name('articledestroy');
 
@@ -116,8 +116,8 @@ Route::get('commentcreate', 'FrontendController@commentcreate')->name('commentcr
  	Route::get('commentstore', 'FrontendController@commentstore')->name('commentstore');
  	Route::get('commentupdate', 'FrontendController@commentupdate')->name('commentupdate');
  	Route::get('commentdestroy', 'FrontendController@commentdestroy')->name('commentdestroy');
-//  Route::resource('posts','PostController');
-//  Route::resource('frontend','FrontendController');
+ Route::resource('posts','PostController');
+
 
 
  

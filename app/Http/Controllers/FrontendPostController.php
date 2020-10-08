@@ -4,18 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Post;
-
-use App\Article;
-
-use App\Category;
-
-
-class PostController extends Controller
+class FrontendPostController extends Controller
 {
-    // public function _construct($value=''){
-    //     $this->middle('auth')->except('index');
-    // }
     /**
      * Display a listing of the resource.
      *
@@ -23,8 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
-       
+        $posts=Post::all();
         return view('frontend.posts.index',compact('posts'));
     }
 
@@ -36,16 +25,8 @@ class PostController extends Controller
     public function create()
     {
         $categories=Category::all();
-        return view('frontend.posts.create',compact('categories'));
-    }
-
-    //get the current post using the post $id
-    public function showpost(String $id)
-    {
-        $post=Post::find($id);
-         return view ("showpost")->with("current",$post);
-        //return view('frontend.showpost');
-
+        $articles=Article::all();
+        return view('frontend.posts.create',compact('categories','articles'));
     }
 
     /**
@@ -56,23 +37,36 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-
-       $request->validate([
+         $request->validate([
             'article' => 'required',
-            'category_name' => 'required',
+            //'category_id' => 'required',
+            'category' => 'required',
             'post_name'=> 'required',
             'post_detail'=>'required',
             'photo'=>'required',
+            'content'=>'required',
         ]);
 
+
+       $imageName = time().'.'.$request->photo->extension();
+
+        $request->photo->move(public_path('frontendtemplate/instylr/img'),$imageName);
+        $myfile = 'frontendtemplate/instylr/img/'.$imageName;
+
         
+
+        //$name=Category::find($request->category);
         // Store Data
         $post = new Post;
-        $post->article_id = $request->article;
-        $post->category_name =$request->category_name;
+        $post->article_id
+         = $request->article;
+        //$post->category_id =$request->category_id;
+        $post->category_id =$request->category;
         $post->post_name=$request->post_name;
         $post->post_detail=$request->post_detail;
-        $post->photo=$request->photo;
+        $post->photo=$myfile;
+        $post->content=$request->content;
+
 
         
 
@@ -81,10 +75,12 @@ class PostController extends Controller
         // Redirect
         
 
-        return redirect()->route('posts.index');
-       }
+        
+        
 
-   
+        $posts=Post::all();
+        return view('frontend.posts.index',compact('posts'));
+    }
 
     /**
      * Display the specified resource.
@@ -94,8 +90,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-      return view('frontend.posts.show');
-  }
+         return view('frontend.posts.show');
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -105,11 +101,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-
-        $post = Post::find($id);
+         $post = Post::find($id);
         // dd($item);
         return view('frontend.posts.edit',compact('post'));
-
     }
 
     /**
@@ -121,31 +115,32 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-       $request->validate([
+         $request->validate([
             
             'article_id' => 'required',
-            'category_name'  => 'required',
-            'post_name'=> 'required',
-            'post_detail'=>'required',
-            'photo'=>'required',
+            'category_id'  => 'required',
         ]);
+
+       // File Upload
+        if ($request->hasFile('photo')) {
+            $imageName = time().'.'.$request->photo->extension();
+
+            $request->photo->move(public_path('frontendtemplate/instylr/img'),$imageName);
+            $myfile = 'frontendtemplate/instylr/img/'.$imageName;
+        }
         // Update Data
         $post = Post::find($id);
         // dd($category);
         $post->article_id = $request->article_id;
-        
-        $post->category_name  = $request->category_name;
-        $post->post_name=$request->post_name;
-        $post->post_detail=$request->post_detail;
-        $post->photo=$request->photo;
+        $post->category_id  = $request->category_id;
         
         $post->save();
 
         // Redirect
         // Success('Success!', 'Article Updated Successfully.');
 
-        return redirect()->route('posts.index');
-   }
+        return redirect()->route('frontend.posts.index');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -155,20 +150,12 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-
-       $post = Post::find($id);
+        $post = Post::find($id);
 
         $post->delete();
 
         // Alert::success('Success!', 'Post Deleted Successfully.');
         
-        return redirect()->route('posts.index');
-   }
-
-   // create post page
-
-    public function createpost()
-    {
-        return view('frontend.createpost');
+        return redirect()->route('frontend.posts.index');
     }
 }

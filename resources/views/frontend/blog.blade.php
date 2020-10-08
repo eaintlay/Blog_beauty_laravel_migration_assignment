@@ -1,5 +1,5 @@
 @extends('frontendtemplate')
-@section('title','blog');
+@section('title','blog')
 
 @section('content')
 <!-- Custom styles for this template -->

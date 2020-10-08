@@ -13,6 +13,10 @@ class FrontendController extends Controller
     public function _construct($value=''){
         $this->middle('auth')->except('index');
     }
+    public function post()
+    {
+        return view('frontend.post');
+    }
 
     public function cart()
     {
@@ -268,7 +272,8 @@ class FrontendController extends Controller
     public function postcreate()
     {
         $categories=Category::all();
-        return view('frontend.posts.create',compact('categories'));
+        $articles=Article::all();
+        return view('frontend.posts.create',compact('categories','articles'));
     }
     
         public function poststore(Request $request)
@@ -277,7 +282,8 @@ class FrontendController extends Controller
 
 
        $request->validate([
-            'article_id' => 'required',
+            'article' => 'required',
+            //'category_id' => 'required',
             'category' => 'required',
             'post_name'=> 'required',
             'post_detail'=>'required',
@@ -285,16 +291,25 @@ class FrontendController extends Controller
             'content'=>'required',
         ]);
 
-        $name=Category::find($request->category);
+
+       $imageName = time().'.'.$request->photo->extension();
+
+        $request->photo->move(public_path('frontendtemplate/instylr/img'),$imageName);
+        $myfile = 'frontendtemplate/instylr/img/'.$imageName;
+
+        
+
+        //$name=Category::find($request->category);
         // Store Data
         $post = new Post;
-        $post->article_id = $request->article_id;
-        $post->category_id =$request->category_id;
-        $post->category_name =$request->category_name;
+        $post->article_id
+         = $request->article;
+        //$post->category_id =$request->category_id;
+        $post->category_id =$request->category;
         $post->post_name=$request->post_name;
         $post->post_detail=$request->post_detail;
-        $post->photo=$request->photo;
-        $post->c_id=$request->content;
+        $post->photo=$myfile;
+        $post->content=$request->content;
 
 
         
@@ -329,6 +344,14 @@ class FrontendController extends Controller
             'article_id' => 'required',
             'category_id'  => 'required',
         ]);
+
+       // File Upload
+        if ($request->hasFile('photo')) {
+            $imageName = time().'.'.$request->photo->extension();
+
+            $request->photo->move(public_path('frontendtemplate/instylr/img'),$imageName);
+            $myfile = 'frontendtemplate/instylr/img/'.$imageName;
+        }
         // Update Data
         $post = Post::find($id);
         // dd($category);

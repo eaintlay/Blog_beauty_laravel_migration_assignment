@@ -12,7 +12,7 @@ $factory->define(Post::class, function (Faker $faker) {
     return [
     	'post_name' => $faker->post_name,
     	'post_detail' => $faker->post_detail,
-        'photo' => 'frontendtemplate/instylr/img/' . $faker->image('public/frontendtemplate/instylr/img',400,300, null, false),
+        'photo' -> 'frontendtemplate/instylr/img/' . $faker->image('public/frontendtemplate/instylr/img',400,300, null, false),
         
         'article_id'=>function(){
         	return factory(\App\Article::class)->create()->id;

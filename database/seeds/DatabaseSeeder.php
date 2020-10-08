@@ -12,7 +12,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //factory(App\Article::class, 10)->create();
+        factory(App\Category::class, 10)->create();
+        factory(App\Article::class, 10)->create();
+        factory(App\Comment::class, 10)->create();
        // $this->call(RoleTableSeeder::class);
 
         $user = User::create([

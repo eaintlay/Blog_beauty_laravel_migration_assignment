@@ -51,9 +51,20 @@
         <li class="nav-item">
           <a class="nav-link" href="{{route('aboutus')}}">Portfolio</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{{route('postpage')}}">Post</a>
-        </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="{{route('createpost')}}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Post
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{route('index')}}">Laravel Post</a>
+          <a class="dropdown-item" href="{{route('blog')}}">Another Post</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{route('createpost')}}">Create Post</a>
+        </div>
+      </li>
+
+
+        
         <li class="nav-item">
           <a class="nav-link" href="{{route('blog')}}">blog</a>
         </li>

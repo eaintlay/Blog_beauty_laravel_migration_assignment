@@ -17,7 +17,6 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('article_id');
             $table->unsignedBigInteger('category_id');
-            $table->text('category_name');
             $table->text('post_name');
             $table->text('post_detail');
             $table->text('photo');

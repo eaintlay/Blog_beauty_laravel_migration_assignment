@@ -20,11 +20,27 @@
 		<h2 class="align-content-center text text-center">Create a new post</h2>
 
 		<div>
-			<label for="inputArticleId" class="col-sm-2 col-form-label">Article ID</label>
+			<label for="inputArticleId" class="col-sm-2 col-form-label">Article Name</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputArticleId" name="article_id">
+				<select name="article" class="form-control">
+					<optgroup label="Choose Article">
+					@foreach($articles as $article)
+
+
+					<option value="{{$article->id}}">{{$article->name}}
+					</option>
+
+					@endforeach
+				</optgroup>
+				</select>
+
+
+				<div class="text-danger form-control-feedback">
+
+				</div>
 			</div>
 		</div>
+
 
 	<div>
 			<label for="category_id" class="col-sm-2 col-form-label">CategoryName</label>
@@ -66,16 +82,14 @@
 				
 			</div>
 		</div> 
-		<!-- <div class="form-group row">
-			<label for="photo" class="col-sm-2 col-form-label">Photo</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="inputPhoto" name="photo">
 
-				<div class="text-danger form-control-feedback">
-
+		<div class="{{ $errors->has('photo') ? 'has-error' : '' }}">
+				<label for="inputPhoto" class="col-sm-2 col-form-label">Photo</label>
+				<div class="col-sm-5">
+					<input type="file" id="inputPhoto" name="photo" class="d-block">
+					<span class="text-danger">{{ $errors->first('photo') }}</span>
 				</div>
 			</div>
-		</div>  -->
 		 <div>
 			<label for="content" class="col-sm-2 col-form-label"> Content</label>
 			<div class="col-sm-10">
@@ -86,14 +100,10 @@
 				</div>
 			</div>
 		</div>
-		<div class=" {{ $errors->has('photo') ? 'has-error' : '' }}">
-			<label for="inputPhoto" class="col-sm-2 col-form-label">Photo</label>
-			<div class="col-sm-5">
-				<input type="file" id="inputPhoto" name="photo" class="d-block">
-				<span class="text-danger">{{ $errors->first('photo') }}</span>
-			</div>
-		</div>
+		
 
+
+		
 		<br>
 
 		<div class="col-sm-10">
